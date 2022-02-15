@@ -21,7 +21,7 @@
 </head>
 <body>
     <div id="app" class="p-4">
-        <person-component></person-component>
+        @yield('content')
     </div>
 </body>
 </html>
