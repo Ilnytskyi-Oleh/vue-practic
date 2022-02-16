@@ -152,7 +152,7 @@ var render = function () {
           },
         ],
         staticClass: "form-control",
-        attrs: { type: "text", name: "name" },
+        attrs: { type: "text", name: "name", placeholder: "Name" },
         domProps: { value: _vm.name },
         on: {
           input: function ($event) {
@@ -176,7 +176,7 @@ var render = function () {
           },
         ],
         staticClass: "form-control",
-        attrs: { type: "number", name: "age" },
+        attrs: { type: "number", name: "age", placeholder: "Age" },
         domProps: { value: _vm.age },
         on: {
           input: function ($event) {
@@ -200,7 +200,7 @@ var render = function () {
           },
         ],
         staticClass: "form-control",
-        attrs: { type: "text", name: "job" },
+        attrs: { type: "text", name: "job", placeholder: "Job" },
         domProps: { value: _vm.job },
         on: {
           input: function ($event) {
