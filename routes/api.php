@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['namespace' => 'Person', 'prefix' => 'people'], static function(){
     Route::post('/', StoreController::class);
     Route::get('/', IndexController::class);
+    Route::get('/{person}/edit', ShowController::class);
     Route::patch('/{person}', UpdateController::class);
     Route::delete('/{person}', DeleteController::class);
 } );
