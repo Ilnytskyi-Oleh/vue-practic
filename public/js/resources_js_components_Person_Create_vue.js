@@ -11,7 +11,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../router */ "./resources/js/router.js");
 //
 //
 //
@@ -29,7 +28,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Create",
   data: function data() {
@@ -41,15 +39,22 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     store: function store() {
+      var _this = this;
+
       axios.post('/api/people', {
         name: this.name,
         age: this.age,
         job: this.job
       }).then(function (res) {
-        _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+        _this.$router.push({
           name: 'person.index'
         });
       });
+    }
+  },
+  computed: {
+    isDisabled: function isDisabled() {
+      return this.name && this.age && this.job;
     }
   }
 });
@@ -218,7 +223,7 @@ var render = function () {
         "button",
         {
           staticClass: "btn btn-primary",
-          attrs: { type: "submit" },
+          attrs: { disabled: !_vm.isDisabled, type: "submit" },
           on: {
             click: function ($event) {
               $event.preventDefault()

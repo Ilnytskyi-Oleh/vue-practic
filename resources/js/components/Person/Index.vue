@@ -6,13 +6,20 @@
             <th scope="col">Name</th>
             <th scope="col">Age</th>
             <th scope="col">Job</th>
+            <th scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="person in people">
-            <td>{{ person.name }}</td>
+            <td>
+                <router-link :to="{name:'person.show', params:{id:person.id}}">{{ person.name }}</router-link>
+           </td>
             <td>{{ person.age }}</td>
             <td>{{ person.job }} </td>
+            <td>
+                <router-link class="btn btn-outline-primary" :to="{name:'person.edit', params:{id:person.id}}">Edit</router-link>
+                <a @click.prevent="deletePerson(person.id)" href="#" class="ml-2 btn btn-outline-danger">Delete</a>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -34,7 +41,13 @@ export default {
         getPeople(){
             axios.get('/api/people')
             .then(res =>{
-                this.people = res.data
+                this.people = res.data.data
+            })
+        },
+        deletePerson(id){
+            axios.delete(`/api/people/${id}`)
+            .then(res=>{
+                this.getPeople()
             })
         }
     }
