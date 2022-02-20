@@ -1,16 +1,16 @@
 <template>
-    <div class="w-25">
+    <div class="w-25" v-if="person">
         <div class="mb-3">
-            <input type="text" name="name" v-model="name" class="form-control" placeholder="Name">
+            <input type="text" name="name" v-model="person.name" class="form-control" placeholder="Name">
         </div>
         <div class="mb-3">
-            <input type="number" name="age" v-model="age" class="form-control" placeholder="Age">
+            <input type="number" name="age" v-model="person.age" class="form-control" placeholder="Age">
         </div>
         <div class="mb-3">
-            <input type="text" name="job" v-model="job" class="form-control" placeholder="Job">
+            <input type="text" name="job" v-model="person.job" class="form-control" placeholder="Job">
         </div>
         <div>
-            <button :disabled="!isDisabled" @click.prevent="update" type="submit" class="btn btn-primary">Update</button>
+            <button :disabled="!isDisabled" @click.prevent="$store.dispatch('updatePerson', {id:person.id,name:person.name, job: person.job, age: person.age })" type="submit" class="btn btn-primary">Update</button>
         </div>
     </div>
 </template>
@@ -19,36 +19,16 @@
 
 export default {
     name: "Edit",
-    data(){
-        return {
-            name:'',
-            age:null,
-            job:''
-        }
-    },
     mounted() {
-        this.getPerson()
+        this.$store.dispatch('getPerson', this.$route.params.id)
     },
-    methods:{
-        getPerson(){
-            axios.get(`/api/people/${this.$route.params.id}/edit`)
-            .then(res => {
-                this.name = res.data.data.name
-                this.age = res.data.data.age
-                this.job = res.data.data.job
-            })
-        },
 
-        update(){
-            axios.patch(`/api/people/${this.$route.params.id}`, {name:this.name,age:this.age,job:this.job})
-            .then(res=>{
-                this.$router.push({name: 'person.show', params: {id: this.$route.params.id}})
-            })
-        }
-    },
     computed:{
         isDisabled(){
-            return this.name && this.age && this.job
+            return this.person.name && this.person.age && this.person.job
+        },
+        person(){
+            return this.$store.getters.person
         }
     }
 }
